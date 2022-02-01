@@ -10,7 +10,7 @@ services:
     image: jitsucom/jitsu
     environment:
       REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
-      USER_RECOGNITION_ENABLED: false
+      USER_RECOGNITION_ENABLED: true
       USER_RECOGNITION_REDIS_URL: redis://srv-captain--$$cap_appname-redis-users-recognition:6379
     depends_on:
       - $$cap_appname-redis
