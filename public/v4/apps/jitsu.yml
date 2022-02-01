@@ -2,7 +2,7 @@ captainVersion: 4
 caproverOneClickApp:
     instructions:
         start: Jitsu
-        end: Jitsu is deployed. Visit $$cap_appname.$$cap_root_domain:8000/configurator to continue.
+        end: Jitsu is deployed. Visit http://$$cap_appname.$$cap_root_domain/configurator to continue.
 ########
 services:
   $$cap_appname:
@@ -15,19 +15,21 @@ services:
     depends_on:
       - $$cap_appname-redis
     volumes:
-      - $$cap_appname-configurator-data-logs:/home/configurator/data/logs
-      - $$cap_appname-server-data-logs:/home/eventnative/data/logs
-      - $$cap_appname-server-data-logs-events:/home/eventnative/data/logs/events
+      -  $$cap_appname-configurator-logs:/home/configurator/data/logs
+      -  $$cap_appname-server-logs:/home/eventnative/data/logs
+      -  $$cap_appname-server-logs-events:/home/eventnative/data/logs/events
       - /var/run/docker.sock:/var/run/docker.sock
       - $$cap_appname-workspace:/home/eventnative/data/airbyte
     restart: always
     ports:
       - "8000:8000"
+    caproverExtra:
+      containerHttpPort: '8000'
   $$cap_appname-redis:
     container_name: $$cap_appname-redis
     image: redis:6.2.4-alpine
     volumes:
-      - $$cap_appname-redis-data:/data
+      -  $$cap_appname-redis-data:/data
     restart: always
     caproverExtra:
       notExposeAsWebApp: 'true'
@@ -35,9 +37,10 @@ services:
     container_name: $$cap_appname-redis-users-recognition
     image: redis:6.2.4-alpine
     volumes:
-      - $$cap_appname-redis-users-recognition-data:/data
-      - $$cap_appname-redis-users-recognition-redis-conf:/usr/local/etc/redis/redis.conf
-    command: redis-server /usr/local/etc/redis/redis.conf
+      -  $$cap_appname-redis-users-recognition-data:/data
     restart: always
     caproverExtra:
       notExposeAsWebApp: 'true'
+#volumes:
+#  workspace:
+#    name: $$cap_appname-workspace
