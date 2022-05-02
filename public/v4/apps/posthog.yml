@@ -28,7 +28,7 @@ services:
     $$cap_appname-clickhouse:
         # KEEP CLICKHOUSE-SERVER VERSION IN SYNC WITH
         # https://github.com/PostHog/charts-clickhouse/blob/main/charts/posthog/templates/clickhouse_instance.yaml#L88
-        image: yandex/clickhouse-server:${CLICKHOUSE_SERVER_IMAGE_VERSION:-21.11.11.1}
+        image: yandex/clickhouse-server:21.11.11.1
         depends_on:
             - $$cap_appname-kafka
             - $$cap_appname-zookeeper
@@ -58,8 +58,8 @@ services:
             KAFKA_BROKER_ID: 1001
             KAFKA_CFG_RESERVED_BROKER_MAX_ID: 1001
             KAFKA_CFG_LISTENERS: PLAINTEXT://:9092
-            KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-            KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
+            KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://srv-captain--$$cap_appname-kafka:9092
+            KAFKA_CFG_ZOOKEEPER_CONNECT: srv-captain--$$cap_appname-zookeeper:2181
             ALLOW_PLAINTEXT_LISTENER: 'true'
         caproverExtra:
             notExposeAsWebApp: 'true'
@@ -74,6 +74,7 @@ services:
             DATABASE_URL: postgres://posthog:posthog@srv-captain--$$cap_appname-db:5432/posthog
             REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379/
             KAFKA_URL: 'kafka://srv-captain--$$cap_appname-kafka'
+            KAFKA_HOSTS: 'kafka://srv-captain--$$cap_appname-kafka'
             CLICKHOUSE_HOST: 'srv-captain--$$cap_appname-clickhouse'
             CLICKHOUSE_DATABASE: 'posthog'
             CLICKHOUSE_SECURE: 'false'
