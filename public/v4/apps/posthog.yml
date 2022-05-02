@@ -82,7 +82,7 @@ services:
             PGHOST: srv-captain--$$cap_appname-db
             PGUSER: posthog
             PGPASSWORD: posthog
-        image: posthog/posthog:latest
+        image: posthog/posthog:latest-release
         #links:
         #    - db:db
         #    - redis:redis
