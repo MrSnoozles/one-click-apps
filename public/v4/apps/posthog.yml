@@ -4,6 +4,9 @@ caproverOneClickApp:
         - id: $$cap_posthog_secret_key
           label: Random secret key
           defaultValue: $$cap_gen_random_hex(16)
+        - id: $$cap_posthog_port
+          label: The port that's used to deploy posthog
+          defaultValue: 8000
     instructions:
         start: Posthog
         end: Posthog is deployed. Visit $$cap_appname.$$cap_root_domain to continue.
@@ -90,9 +93,9 @@ services:
         #    - clickhouse:clickhouse
         #    - kafka:kafka
         ports:
-            - 8001:8000
+            - $$cap_posthog_port:8000
         caproverExtra:
-            containerHttpPort: '8001'
+            containerHttpPort: '$$cap_posthog_port'
 #volumes:
 #    $$cap_appname-postgres-data:
 #version: '3'
