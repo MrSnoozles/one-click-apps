@@ -73,8 +73,8 @@ services:
         environment:
             DATABASE_URL: postgres://posthog:posthog@srv-captain--$$cap_appname-db:5432/posthog
             REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379/
-            KAFKA_URL: 'kafka://srv-captain--$$cap_appname-kafka'
-            KAFKA_HOSTS: 'kafka://srv-captain--$$cap_appname-kafka'
+            KAFKA_URL: 'kafka://srv-captain--$$cap_appname-kafka:9092'
+            KAFKA_HOSTS: 'srv-captain--$$cap_appname-kafka:9092'
             CLICKHOUSE_HOST: 'srv-captain--$$cap_appname-clickhouse'
             CLICKHOUSE_DATABASE: 'posthog'
             CLICKHOUSE_SECURE: 'false'
