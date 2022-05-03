@@ -74,6 +74,7 @@ services:
             - $$cap_appname-clickhouse
             - $$cap_appname-kafka
         environment:
+            SITE_URL: https://$$cap_appname.$$cap_root_domain
             DATABASE_URL: postgres://posthog:posthog@srv-captain--$$cap_appname-db:5432/posthog
             REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379/
             KAFKA_URL: 'kafka://srv-captain--$$cap_appname-kafka:9092'
@@ -86,6 +87,7 @@ services:
             PGHOST: srv-captain--$$cap_appname-db
             PGUSER: posthog
             PGPASSWORD: posthog
+            IS_BEHIND_PROXY: 'true'
         image: posthog/posthog:latest-release
         #links:
         #    - db:db
